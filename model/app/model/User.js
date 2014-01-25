@@ -4,6 +4,14 @@ Ext.define('User', {
     fields: [
       { name: 'id', type: 'int' },
       { name: 'name', type: 'string' }
-    ]
+    ],
+    proxy: {
+      type: 'rest',
+      url: 'data/users',
+      reader: {
+        type: 'json',
+        root: 'users'
+      }
+    }
   }
 });
