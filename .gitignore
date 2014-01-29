@@ -8,3 +8,6 @@
 
 # OS
 .DS_Store
+
+# db files
+form-I/db/*.sqlite3

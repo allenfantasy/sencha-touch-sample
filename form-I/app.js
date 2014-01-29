@@ -128,13 +128,13 @@ Ext.application({
       listeners: {
         change: function(select, newValue, oldValue) {
           switch(newValue) {
-            case '1':
+            case '0':
               Ext.Msg.alert("你好攻城狮");
               break;
-            case '2':
+            case '1':
               Ext.Msg.alert("你好射鸡湿");
               break;
-            case '3':
+            case '2':
               Ext.Msg.alert("你好CEO大人");
               break;
           }
@@ -242,7 +242,7 @@ Ext.application({
                   age: 23,
                   email: 'nicole.s@gmail.com',
                   hobby: ['music', 'movie'],
-                  career: '3'
+                  career: '2'
                 });
                 formPanel.setRecord(user);
               }
@@ -280,7 +280,6 @@ Ext.application({
                 Ext.Ajax.request({
                   url: backendDomain + '/users/first',
                   method: 'PUT',
-                  params:
                 })
               }
             }

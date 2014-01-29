@@ -10,9 +10,7 @@ ActiveRecord::Base.establish_connection(
   :database => 'db/test-sinatra.sqlite'
 )
 
-CAREERS = %w[攻城狮 射鸡湿 CEO]
-
-class MyApp < Sinatra::Base
+class Application < Sinatra::Base
   set :static, true
   set :public_folder, File.dirname(__FILE__) + '/public'
   configure :development, :production do
@@ -21,6 +19,7 @@ class MyApp < Sinatra::Base
   end
 
   before do
+    CAREERS = %w[攻城狮 射鸡湿 CEO]
     headers 'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => "OPTIONS, GET, POST",
             'Access-Control-Allow-Headers' => "accept, authorization, origin, X-Requested-With, Content-Type"
