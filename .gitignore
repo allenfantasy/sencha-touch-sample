@@ -10,4 +10,4 @@
 .DS_Store
 
 # db files
-form-I/api4sencha/db/*.sqlite3
+form-I/api4sencha/db/*.sqlite
