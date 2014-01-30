@@ -298,7 +298,46 @@ Ext.application({
         //}
       //}
     });
-    Ext.Viewport.add(formPanel);
+
+    var toolbar1 = Ext.create('Ext.Toolbar', {
+      docked: 'top',
+      items: [
+        {
+          xtype: 'searchfield',
+          id: 'search',
+          placeHolder: '请输入用户姓名',
+          width: 200
+        },
+        {
+          xtype: 'button',
+          text: '搜索',
+          handler: function() {
+            Ext.Ajax.request({
+              url: backendDomain + '/users/find',
+              params: {
+                name: toolbar1.getComponent('search').getValue()
+              },
+              success: function(response) {
+                var result = Ext.decode(response.responseText);
+                if (result.success) {
+                  result.user.hobby = result.user.hobby.split(',');
+                  Ext.Msg.alert('找到用户', result.user.username);
+                  var user = Ext.create('MyApp.model.User', result.user)
+                  formPanel.setRecord(user);
+                } else {
+                  Ext.Msg.alert('找不到用户!');
+                }
+                console.log(result);
+              },
+              faliure: function() {
+                Ext.Msg.alert('数据搜索失败!');
+              }
+            });
+          }
+        }
+      ]
+    });
+    Ext.Viewport.add([toolbar1, formPanel]);
     //formPanel.innerItems[0].getComponent('txt_gender_fieldset').getComponent('txt_gender_male').setGroupValue('female');
     //formPanel.getScrollable().getScroller().setFps(100);
     //formPanel.getScrollable().getScroller().scrollTo(0,200);

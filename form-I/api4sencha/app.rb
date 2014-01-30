@@ -26,6 +26,17 @@ class Application < Sinatra::Base
     params.delete('_dc')
   end
 
+  helpers do
+    def json_for(user)
+      result = if user.nil?
+                 { success: false }
+               else
+                 user.as_json.merge({ success: true })
+               end
+      result.to_json
+    end
+  end
+
   get '/' do
     @users = User.all
     erb :'users/index'
@@ -48,15 +59,16 @@ class Application < Sinatra::Base
     end
   end
   get '/users/first' do
-    user = User.first
-    if user.nil?
-      { success: false }.to_json
-    else
-      user.as_json.merge({ success: true }).to_json
-    end
+    json_for(User.first)
   end
 
   put '/users/:id' do
+  end
+
+  post '/users/find' do
+    logger.info "PARAMS:"
+    logger.info params
+    json_for(User.find_by_username(params[:name]))
   end
 
   options '/*' do
