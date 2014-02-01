@@ -4,6 +4,7 @@ require 'sinatra/reloader' if development? # auto-reload
 require 'json'
 require 'active_record'
 require './models'
+require './helpers'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
@@ -26,16 +27,7 @@ class Application < Sinatra::Base
     params.delete('_dc')
   end
 
-  helpers do
-    def json_for(user)
-      result = if user.nil?
-                 { success: false }
-               else
-                 user.as_json.merge({ success: true })
-               end
-      result.to_json
-    end
-  end
+  helpers ApplicationHelper
 
   get '/' do
     @users = User.all
@@ -69,6 +61,10 @@ class Application < Sinatra::Base
     logger.info "PARAMS:"
     logger.info params
     json_for(User.find_by_username(params[:name]))
+  end
+
+  get '/users' do
+    json_for(User.all)
   end
 
   options '/*' do
