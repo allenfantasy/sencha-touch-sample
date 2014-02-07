@@ -175,9 +175,9 @@ Ext.application({
               handler: function() {
                 var params = formPanel.getValues();
                 var user = Ext.create('MyApp.model.User', params);
-                var errors = user.validate();
+                var validateResults = user.validate();
                 params.hobby = Ext.encode(params.hobby);
-                if (errors.isValid()) {
+                if (validateResults.isValid()) {
                   Ext.Ajax.request({
                     url: backendDomain + '/foo',
                     method: 'POST',
@@ -217,7 +217,7 @@ Ext.application({
                   //});
                 } else {
                   var message = "";
-                  Ext.each(errors.items, function(rec){
+                  Ext.each(validateResults.items, function(rec){
                     message += rec.getMessage() + "<br />";
                   });
                   Ext.Msg.alert('验证失败!', message);
